@@ -37,6 +37,10 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             return
         }
         
+        startLocationManager()
+        updateLabels()
+        
+        
         //you wil receive your location withing 10 meters
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -73,6 +77,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         let newLocation = locations.last as! CLLocation
         println("didUpdateLocations \(newLocation)")
         
+        lastLocationError = nil
         location = newLocation
         updateLabels()
     }
@@ -126,7 +131,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         if CLLocationManager.locationServicesEnabled(){
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.stopUpdatingLocation()
+            locationManager.startUpdatingLocation()
             updatingLocation = true
         }
     }
