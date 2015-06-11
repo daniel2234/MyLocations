@@ -17,6 +17,12 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     var updatingLocation = false
     var lastLocationError:NSError?
     
+    let geocoder = CLGeocoder()//object used to will perform geocoding to help turn coordinates into a human-readable address
+    var placemark: CLPlacemark?//optional to to look up address
+    
+    var performingReverseGeocoding = false
+    var lastGeocodingError: NSError?
+    
     @IBOutlet weak var messageLabel:UILabel!
     @IBOutlet weak var latitudeLabel:UILabel!
     @IBOutlet weak var longitudeLabel:UILabel!
@@ -37,20 +43,25 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             return
         }
         
-        startLocationManager()
+        if updatingLocation {
+            stopLocationManager()
+        } else {
+            location = nil
+            lastLocationError = nil
+            placemark = nil
+            lastGeocodingError = nil
+            startLocationManager()
+        }
+        
         updateLabels()
-        
-        
-        //you wil receive your location withing 10 meters
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.startUpdatingLocation()
+        configureGetButton()
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateLabels()
+        configureGetButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,15 +82,52 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         
         stopLocationManager()
         updateLabels()
+        configureGetButton()
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!){
         let newLocation = locations.last as! CLLocation
         println("didUpdateLocations \(newLocation)")
+        // cached-result, the location manager  may initallly give you the most recently found locaiton under the assumption that you might not have moved much sine last time
+        if newLocation.timestamp.timeIntervalSinceNow < -5 {
+            return
+        }
         
-        lastLocationError = nil
-        location = newLocation
-        updateLabels()
+        
+        if newLocation.horizontalAccuracy < 0 {
+            return
+        }
+        // this gives a more farily accurate reading
+        if location == nil || location!.horizontalAccuracy > newLocation.horizontalAccuracy{
+            
+            lastLocationError = nil
+            location = newLocation
+            updateLabels()
+        
+            if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
+                println("*** We're done!")
+                stopLocationManager()
+                configureGetButton()
+            }
+            if !performingReverseGeocoding{
+                println("Going to Geocode")
+                
+                performingReverseGeocoding = true
+                //closure that handles the placemark
+                geocoder.reverseGeocodeLocation(location, completionHandler: {
+                    placemarks, error in
+                    println("*** Found placemarkers: \(placemarks), error: \(error)")
+                    self.lastGeocodingError = error
+                    if error == nil && !placemarks.isEmpty{
+                        self.placemark = placemarks.last as? CLPlacemark
+                    } else {
+                        self.placemark = nil
+                    }
+                    self.performingReverseGeocoding = false
+                    self.updateLabels()
+                })
+            }
+        }
     }
     
     func showLocationServicesDeniedAlert(){
@@ -98,12 +146,18 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             longitudeLabel.text = String(format: "%.8f", location.coordinate.longitude)
             tagButton.hidden = false
             messageLabel.text = ""
+            
+            if let placemark = placemark{
+                addressLabel.text = stringFromPlacemark(placemark)
+                println("Success!")
+            }
         } else {
             latitudeLabel.text = ""
             longitudeLabel.text = ""
             addressLabel.text = ""
             tagButton.hidden = false
-            
+
+            //error-handling helps narrow down the the nearest location by 10 meters for battery performance and cpu usage
             //checking if the user accepts that the app gives permission to use the location services
             var statusMessage:String
             if let error = lastLocationError{
@@ -125,6 +179,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             }
             messageLabel.text = statusMessage
         }
+   
+        
     }
     
     func startLocationManager(){
@@ -144,5 +200,21 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         //the if-statement in here that checks whether the boolean instance variable updatingLocation is true or false, if it is false, then the location manager wasnt currently active and there is no need to stop it
         }
     }
+    
+    func configureGetButton(){
+        if updatingLocation{
+            getButton.setTitle("Stop", forState: .Normal)
+        } else {
+            getButton.setTitle("Get My Location", forState: .Normal)
+        }
+    }
+    
+    func stringFromPlacemark(placemark:CLPlacemark) -> String{
+        return "\(placemark.subThoroughfare) \(placemark.thoroughfare)\n" +
+               "\(placemark.locality) \(placemark.administrativeArea) " +
+               "\(placemark.postalCode)"
+
+    }
+
 }
 
