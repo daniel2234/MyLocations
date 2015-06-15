@@ -45,8 +45,13 @@ class LocationDetailsTableViewController: UITableViewController {
     @IBAction func cancel(){
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    
+    // unwind action method
+    @IBAction func categoryPickerDidPickCategory(segue: UIStoryboardSegue){
+        let controller = segue.sourceViewController as! CategoryPickerViewController
+        
+        categoryName = controller.selectedCategoryName
+        categoryLabel.text = categoryName
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,7 +119,7 @@ class LocationDetailsTableViewController: UITableViewController {
             
         }
     }
-
+    
 }
 
 extension LocationDetailsTableViewController: UITextViewDelegate{

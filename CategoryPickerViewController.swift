@@ -26,15 +26,8 @@ class CategoryPickerViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return categories.count
-    }
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+        return categories.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -51,7 +44,7 @@ class CategoryPickerViewController: UITableViewController {
         }
         return cell
     }
-    
+    // MARK: - Table View Delegate
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row != selectedIndexPath.row{
             if let newCell = tableView.cellForRowAtIndexPath(indexPath){
@@ -60,8 +53,7 @@ class CategoryPickerViewController: UITableViewController {
             if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath){
                 oldCell.accessoryType = .None
             }
-            selectedIndexPath = indexPath
+                selectedIndexPath = indexPath
         }
     }
-    
 }
