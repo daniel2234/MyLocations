@@ -44,6 +44,7 @@ class CategoryPickerViewController: UITableViewController {
         }
         return cell
     }
+    
     // MARK: - Table View Delegate
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row != selectedIndexPath.row{

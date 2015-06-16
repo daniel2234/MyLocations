@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		653E946D1B30C02B009204A7 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E946C1B30C02B009204A7 /* HudView.swift */; };
 		65CBD12D1B27592B00B9213C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CBD12C1B27592B00B9213C /* AppDelegate.swift */; };
 		65CBD12F1B27592B00B9213C /* CurrentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CBD12E1B27592B00B9213C /* CurrentLocationViewController.swift */; };
 		65CBD1311B27592B00B9213C /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CBD1301B27592B00B9213C /* SecondViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		653E946C1B30C02B009204A7 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		65CBD1271B27592B00B9213C /* MyLocations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyLocations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65CBD12B1B27592B00B9213C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65CBD12C1B27592B00B9213C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,7 +43,7 @@
 		65CBD1431B27592B00B9213C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65CBD1441B27592B00B9213C /* MyLocationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationsTests.swift; sourceTree = "<group>"; };
 		65CBD1851B2A0EE100B9213C /* LocationDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationDetailsTableViewController.swift; path = ../LocationDetailsTableViewController.swift; sourceTree = "<group>"; };
-		65CBD1B91B2F6B6700B9213C /* CategoryPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryPickerViewController.swift; sourceTree = "<group>"; };
+		65CBD1B91B2F6B6700B9213C /* CategoryPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryPickerViewController.swift; path = ../CategoryPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +67,7 @@
 		65CBD11E1B27592B00B9213C = {
 			isa = PBXGroup;
 			children = (
-				65CBD1B91B2F6B6700B9213C /* CategoryPickerViewController.swift */,
+				653E946C1B30C02B009204A7 /* HudView.swift */,
 				65CBD1291B27592B00B9213C /* MyLocations */,
 				65CBD1411B27592B00B9213C /* MyLocationsTests */,
 				65CBD1281B27592B00B9213C /* Products */,
@@ -84,6 +86,7 @@
 		65CBD1291B27592B00B9213C /* MyLocations */ = {
 			isa = PBXGroup;
 			children = (
+				65CBD1B91B2F6B6700B9213C /* CategoryPickerViewController.swift */,
 				65CBD1851B2A0EE100B9213C /* LocationDetailsTableViewController.swift */,
 				65CBD12C1B27592B00B9213C /* AppDelegate.swift */,
 				65CBD12E1B27592B00B9213C /* CurrentLocationViewController.swift */,
@@ -223,6 +226,7 @@
 			files = (
 				65CBD1311B27592B00B9213C /* SecondViewController.swift in Sources */,
 				65CBD1861B2A0EE100B9213C /* LocationDetailsTableViewController.swift in Sources */,
+				653E946D1B30C02B009204A7 /* HudView.swift in Sources */,
 				65CBD12D1B27592B00B9213C /* AppDelegate.swift in Sources */,
 				65CBD1BA1B2F6B6700B9213C /* CategoryPickerViewController.swift in Sources */,
 				65CBD12F1B27592B00B9213C /* CurrentLocationViewController.swift in Sources */,
@@ -421,6 +425,7 @@
 				65CBD14A1B27592C00B9213C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		65CBD14B1B27592C00B9213C /* Build configuration list for PBXNativeTarget "MyLocationsTests" */ = {
 			isa = XCConfigurationList;
@@ -429,6 +434,7 @@
 				65CBD14D1B27592C00B9213C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

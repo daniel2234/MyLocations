@@ -38,8 +38,9 @@ class LocationDetailsTableViewController: UITableViewController {
     
     
     @IBAction func done(){
-        println("Description '\(descriptionText)'")
-        dismissViewControllerAnimated(true, completion: nil)
+        //this creates a HudView object and adds it to the navigation controller's view with an animation, it also sets the text property on the new object 
+        let hudView = HudView.hudInView(navigationController!.view, animated: true)
+        hudView.text = "Tagged"
     }
     
     @IBAction func cancel(){
