@@ -328,7 +328,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="bUl-w7-QqM" kind="unwind" unwindAction="categoryPickerDidPickCategory:" id="aQW-FG-y4a"/>
+                                    <segue destination="bUl-w7-QqM" kind="unwind" identifier="PickedCategory" unwindAction="categoryPickerDidPickCategory:" id="aQW-FG-y4a"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
