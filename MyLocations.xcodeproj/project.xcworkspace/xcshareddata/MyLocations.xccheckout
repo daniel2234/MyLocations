@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>F09CDB9D-1F9D-424E-B9CB-4467DFBDC551</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>MyLocations</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>ED5B1D5F3B68A1DA71003C7842D08C89ECE358E7</key>
 		<string>https://github.com/daniel2234/MyLocations.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>MyLocations.xcodeproj/project.xcworkspace</string>
+	<string>MyLocations.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>ED5B1D5F3B68A1DA71003C7842D08C89ECE358E7</key>

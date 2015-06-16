@@ -45,13 +45,6 @@ class LocationDetailsTableViewController: UITableViewController {
     @IBAction func cancel(){
         dismissViewControllerAnimated(true, completion: nil)
     }
-    // unwind action method
-    @IBAction func categoryPickerDidPickCategory(segue: UIStoryboardSegue){
-        let controller = segue.sourceViewController as! CategoryPickerViewController
-        
-        categoryName = controller.selectedCategoryName
-        categoryLabel.text = categoryName
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,16 +105,22 @@ class LocationDetailsTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
         if segue.identifier == "PickCategory" {
             let controller = segue.destinationViewController as! CategoryPickerViewController
             controller.selectedCategoryName = categoryName
-            
         }
     }
     
+    // unwind action method
+    @IBAction func categoryPickerDidPickCategory(segue: UIStoryboardSegue){
+        let controller = segue.sourceViewController as! CategoryPickerViewController
+        
+        categoryName = controller.selectedCategoryName
+        categoryLabel.text = categoryName
+    }
 }
 
+// extension for the description text delegate to save info when typing into the text field
 extension LocationDetailsTableViewController: UITextViewDelegate{
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool{
         descriptionText = (textView.text as NSString).stringByReplacingCharactersInRange(range, withString: text)
