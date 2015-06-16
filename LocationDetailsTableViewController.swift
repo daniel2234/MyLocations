@@ -63,8 +63,30 @@ class LocationDetailsTableViewController: UITableViewController {
         }
         dateLabel.text = formatDate(NSDate())
     
+        //helps recognize touches and other finger movements, also is target-design design patterns
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("hideKeyboard:"))
+        gestureRecognizer.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(gestureRecognizer)
     }
-
+    
+    // the layout phase of your view controller when it first appears on the screen, the ideal place for changing frames of your views by hand
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        descripitionTextView.frame.size.width = view.frame.size.width - 30
+    }
+    
+    
+    //hide keyboard lets the user tap outside the tableview
+    func hideKeyboard(gestureRecognizer: UIGestureRecognizer){
+        let point = gestureRecognizer.locationInView(tableView)
+        let indexPath = tableView.indexPathForRowAtPoint(point)
+        // force unwrap is guaranteed to work because of short-circuiting
+        if indexPath != nil && indexPath!.section == 0 && indexPath!.row == 0{
+            return
+        }
+        descripitionTextView.resignFirstResponder()
+    }
+    
     
     func stringFromPlacemark(placemark:CLPlacemark) -> String{
         return "\(placemark.subThoroughfare) \(placemark.thoroughfare), " + "\(placemark.locality), " + "\(placemark.administrativeArea) \(placemark.postalCode)," + "\(placemark.country)"
@@ -82,7 +104,7 @@ class LocationDetailsTableViewController: UITableViewController {
         return dateFormatter.stringFromDate(date)
     }
 
-    
+    //MARK: - UITableViewDelegate
      override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
         if indexPath.section == 0  && indexPath.row == 0{
             return 88
@@ -97,6 +119,21 @@ class LocationDetailsTableViewController: UITableViewController {
             return addressLabel.frame.size.height + 20
         } else {
             return 44
+        }
+    }
+    
+    //limits taps to just the cells from the first two sections because section 3[index 2] is read-only
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        if indexPath.section == 0 || indexPath.section == 1{
+            return indexPath
+        } else {
+            return nil
+        }
+    }
+    //method handles tha actual taps on the rows
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            descripitionTextView.becomeFirstResponder()
         }
     }
 
