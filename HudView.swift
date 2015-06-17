@@ -15,6 +15,7 @@ class HudView: UIView {
         //making an instance of the hud view
         let hudView = HudView(frame: view.bounds)
         hudView.opaque = false
+        hudView.showAnimated(animated)
         
         view.opaque = false
         
@@ -46,9 +47,22 @@ class HudView: UIView {
         let textSize = text.sizeWithAttributes(attribs)
         //postioning of the text
         let textPoint = CGPoint(x: center.x - round(textSize.width / 2), y: center.y - round(textSize.height / 2) + boxHeight / 4)
-        //draws the text
+        //draws the text with attributes
         text.drawAtPoint(textPoint, withAttributes: attribs)
     }
     
-    
+    func showAnimated(animated:Bool){
+        if animated{
+            //make it transparent
+            alpha = 0
+            //this stretches out the inital view
+            transform = CGAffineTransformMakeScale(1.3, 1.3)
+            //animation that is nto executed the right way, UIKit will animate the properties tha you change from their intial state to the final state
+            //spring animation
+            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(0), animations: {
+                self.alpha = 1
+                self.transform = CGAffineTransformIdentity
+                }, completion: nil)        }
+        
+    }
 }
