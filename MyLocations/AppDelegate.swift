@@ -17,24 +17,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // creates the a lazy instance with variable name managedObjectContext that is an object of type NSManagedObjectContext, very Core Data app uses this
     lazy var managedObjectContext: NSManagedObjectContext = {
         
-        //1
+        //1 Paths and Files are represented as URL by creating a NSURL object
         if let modelURL = NSBundle.mainBundle().URLForResource("DataModel", withExtension: "momd"){
-           //2
+           //2// this object represents the data model at runtime, you ask it what types of entities does it have, what attributes theses entities it has
             if let model = NSManagedObjectModel(contentsOfURL: modelURL){
-              //3
+              //3 this object in charge of the SQLite database
                 let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
-              //4
+              //4 app's data is store in SQL database  inside the app's Documents folder, NSURL object points to the DataStore.sqlite file
                 let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
                 let documentsDirectory = urls[0] as! NSURL
                 let storeURL = documentsDirectory.URLByAppendingPathComponent("Datastore.sqlite")
-                //5
+                //5 Add the SQLite database to the store coordinator
                 var error:NSError?
                 if let store = coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil, error: &error){
-                   //6
+                   //6 create a NSManagedObject Context and return it
                     let context = NSManagedObjectContext()
                     context.persistentStoreCoordinator = coordinator
+                    println(storeURL)//find the sqlite folder
+                    println(documentsDirectory)
                     return context
-                //7
+                //7 debug on the errors and if something went wrong 
                 } else {
                     println("Error adding persistent store at \(storeURL): \(error!)")
                 }
