@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreLocation
+import CoreData
+
 
 private let dateFormatter: NSDateFormatter = {
 //in closure because you want to assign the result of the dateFormatter
@@ -29,6 +31,8 @@ class LocationDetailsTableViewController: UITableViewController {
     var descriptionText = ""
     var categoryName = "No Category"
     
+    var managedObjectContext: NSManagedObjectContext!
+    
     @IBOutlet weak var descripitionTextView:UITextView!
     @IBOutlet weak var categoryLabel:UILabel!
     @IBOutlet weak var latitudeLabel:UILabel!
@@ -41,6 +45,12 @@ class LocationDetailsTableViewController: UITableViewController {
         //this creates a HudView object and adds it to the navigation controller's view with an animation, it also sets the text property on the new object 
         let hudView = HudView.hudInView(navigationController!.view, animated: true)
         hudView.text = "Tagged"
+        
+        //an abstraction that lets you dismiss the view controller after the location have been tagged
+        afterDelay(0.6) {
+            self.dismissViewControllerAnimated(true, completion: nil)//trailing closure syntax
+        }
+        
     }
     
     @IBAction func cancel(){

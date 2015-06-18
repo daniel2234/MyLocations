@@ -62,7 +62,7 @@ class HudView: UIView {
             UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(0), animations: {
                 self.alpha = 1
                 self.transform = CGAffineTransformIdentity
-                }, completion: nil)        }
-        
+                }, completion: nil)
+        }
     }
 }
