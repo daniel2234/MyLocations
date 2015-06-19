@@ -11,7 +11,7 @@ import CoreData
 import CoreLocation
 
 class Location: NSManagedObject {
-
+    
     @NSManaged var latitude: Double
     @NSManaged var longitude: Double
     @NSManaged var locationDescription: String

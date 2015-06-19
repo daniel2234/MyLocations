@@ -47,26 +47,27 @@ class LocationDetailsTableViewController: UITableViewController {
         //this creates a HudView object and adds it to the navigation controller's view with an animation, it also sets the text property on the new object 
         let hudView = HudView.hudInView(navigationController!.view, animated: true)
         hudView.text = "Tagged"
-        //1 creates a new location object
+        //1 creates a new location object, asking the NSEntityDescription class  to insert a new object for your entity into the managed object context
         let location = NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: managedObjectContext) as! Location
-        //2
+        //2 settings the attributes for the new object
         location.locationDescription = descriptionText
         location.category = categoryName
         location.latitude = coordinate.latitude
         location.longitude = coordinate.longitude
         location.date = date
         location.placemark = placemark
-        
+        //error handling for trying to save objects into coredata
         var error: NSError?
         if !managedObjectContext.save(&error){
-            println("Error: \(error)")
-            abort()
+            fatalCoreDataError(error)
+            return
+            
         }
+        
         //an abstraction that lets you dismiss the view controller after the location have been tagged
         afterDelay(0.6) {
             self.dismissViewControllerAnimated(true, completion: nil)//trailing closure syntax
         }
-        
     }
     
     @IBAction func cancel(){
@@ -183,6 +184,8 @@ class LocationDetailsTableViewController: UITableViewController {
         categoryLabel.text = categoryName
     }
 }
+
+
 
 // extension for the description text delegate to save info when typing into the text field
 extension LocationDetailsTableViewController: UITextViewDelegate{

@@ -9,6 +9,18 @@
 import UIKit
 import CoreData
 
+let myManagedObjectContextSaveDidFailNotification = "MyManagedObjectContextSaveDidFailNotification"
+
+func fatalCoreDataError(error:NSError?){
+    if let error = error {
+        println("*** Fatal Error: \(error), \(error.userInfo)")
+    }
+    NSNotificationCenter.defaultCenter().postNotificationName(myManagedObjectContextSaveDidFailNotification, object: error)
+}
+
+
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -59,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             currentLocationViewController.managedObjectContext = managedObjectContext
         }
-        
+        listenForFatalCoreDataNotifications()
         return true
     }
 
@@ -85,6 +97,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func listenForFatalCoreDataNotifications(){
+        //1 tells the NSNotificationCenter that you want to be notified whenever a mymanagedObjectContextsavedidfailnotification is posted, has one argument called notification which contains NSNotification object //wildcard is used just for the closure
+        NSNotificationCenter.defaultCenter().addObserverForName(myManagedObjectContextSaveDidFailNotification, object: nil, queue: NSOperationQueue.mainQueue(), usingBlock: { _ in
+            //2 Create  a UIAlertcontroller to show the error message
+            let alert = UIAlertController(title: "Internal Error", message: "There was a fatal error in the app and it cannot continue.\n\n" + "Press OK to terminate the app. Sorry for the inconvenience.", preferredStyle: .Alert)
+            //3 add the action for the OK button, the code for handling the button press is in the closure creates the NSexception object
+            let action = UIAlertAction(title: "OK", style: .Default){ _ in
+                let exception = NSException(name: NSInternalInconsistencyException, reason: "Fatal Core Data Error", userInfo: nil)
+                exception.raise()
+            }
+            alert.addAction(action)
+            //4 present the alert
+            self.viewControllerForShowingAlert().presentViewController(alert, animated: true, completion: nil)
+            
+        })
+    }
+    
+    
+//5 to the show the alert, you need a view controller that is currently visible
+    func viewControllerForShowingAlert() -> UIViewController{
+        let rootViewController = self.window!.rootViewController!
+        
+        if let presentedViewController = rootViewController.presentedViewController{
+            return presentedViewController
+        } else {
+            return rootViewController
+        }
+    }
 }
 
