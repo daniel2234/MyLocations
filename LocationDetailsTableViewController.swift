@@ -33,6 +33,8 @@ class LocationDetailsTableViewController: UITableViewController {
     
     var managedObjectContext: NSManagedObjectContext!
     
+    var date = NSDate()
+    
     @IBOutlet weak var descripitionTextView:UITextView!
     @IBOutlet weak var categoryLabel:UILabel!
     @IBOutlet weak var latitudeLabel:UILabel!
@@ -45,7 +47,21 @@ class LocationDetailsTableViewController: UITableViewController {
         //this creates a HudView object and adds it to the navigation controller's view with an animation, it also sets the text property on the new object 
         let hudView = HudView.hudInView(navigationController!.view, animated: true)
         hudView.text = "Tagged"
+        //1 creates a new location object
+        let location = NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: managedObjectContext) as! Location
+        //2
+        location.locationDescription = descriptionText
+        location.category = categoryName
+        location.latitude = coordinate.latitude
+        location.longitude = coordinate.longitude
+        location.date = date
+        location.placemark = placemark
         
+        var error: NSError?
+        if !managedObjectContext.save(&error){
+            println("Error: \(error)")
+            abort()
+        }
         //an abstraction that lets you dismiss the view controller after the location have been tagged
         afterDelay(0.6) {
             self.dismissViewControllerAnimated(true, completion: nil)//trailing closure syntax
@@ -72,7 +88,7 @@ class LocationDetailsTableViewController: UITableViewController {
         } else {
             addressLabel.text = "No Address Found"
         }
-        dateLabel.text = formatDate(NSDate())
+        dateLabel.text = formatDate(date)
     
         //helps recognize touches and other finger movements, also is target-design design patterns
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("hideKeyboard:"))
