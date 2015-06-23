@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		650744BD1B39D8B000C15409 /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650744BC1B39D8B000C15409 /* LocationsViewController.swift */; };
 		653E946D1B30C02B009204A7 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E946C1B30C02B009204A7 /* HudView.swift */; };
 		655055F81B31CF2E00C60518 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655055F71B31CF2E00C60518 /* Functions.swift */; };
 		6550565F1B334BA300C60518 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6550565D1B334BA300C60518 /* DataModel.xcdatamodeld */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		650744BC1B39D8B000C15409 /* LocationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
 		653E946C1B30C02B009204A7 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HudView.swift; path = ../HudView.swift; sourceTree = "<group>"; };
 		655055F71B31CF2E00C60518 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		6550565E1B334BA300C60518 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 		65CBD11E1B27592B00B9213C = {
 			isa = PBXGroup;
 			children = (
+				650744BC1B39D8B000C15409 /* LocationsViewController.swift */,
 				6550565D1B334BA300C60518 /* DataModel.xcdatamodeld */,
 				655055F71B31CF2E00C60518 /* Functions.swift */,
 				65CBD1291B27592B00B9213C /* MyLocations */,
@@ -234,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65CBD1311B27592B00B9213C /* SecondViewController.swift in Sources */,
+				650744BD1B39D8B000C15409 /* LocationsViewController.swift in Sources */,
 				6550565F1B334BA300C60518 /* DataModel.xcdatamodeld in Sources */,
 				65CBD1861B2A0EE100B9213C /* LocationDetailsTableViewController.swift in Sources */,
 				655056611B334DD500C60518 /* Location.swift in Sources */,
